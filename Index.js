@@ -27,6 +27,11 @@ app.use(cors());
 
 
 // Routes
+app.get('/', (req, res) => {
+  res.send('Hello');
+});
+
+
 app.use('/api', userRoutes);
 app.use('/apply', applyRoutes);
 // Start server
