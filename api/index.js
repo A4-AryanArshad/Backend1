@@ -24,7 +24,9 @@ const cors = require('cors');
 
 app.use(cors());
 
-
+module.exports = (req, res) => {
+  res.status(200).json({ message: "Hello world from Vercel serverless function!" });
+};
 
 
 // Routes
