@@ -21,10 +21,7 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 const cors = require('cors');
 
-app.use(cors({
-  origin: 'https://fvg-global-assist.webflow.io/',
-  credentials: true
-}));
+app.use(cors());
 
 
 
