@@ -1,36 +1,41 @@
+
+
+
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const userRoutes = require('../routes/userRoutes');
 const applyRoutes = require('../routes/applyRoutes');
-const cors = require('cors');
+const app = express();
 require('dotenv').config();
 
-const app = express();
+// DB Connection
+mongoose.connect(process.env.MONGO_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+}).then(() => console.log("MongoDB connected"))
+  .catch(err => console.error(err));
 
-// Middleware
+// Middlewares
 app.use(bodyParser.json());
 app.use(cookieParser());
+const cors = require('cors');
+
 app.use(cors());
 
-// DB Connection
-if (!mongoose.connection.readyState) {
-  mongoose.connect(process.env.MONGO_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  }).then(() => console.log("MongoDB connected"))
-    .catch(err => console.error("MongoDB error:", err));
-}
+module.exports = (req, res) => {
+  res.status(200).json({ message: "Hello world from Vercel serverless function!" });
+};
+
 
 // Routes
 app.get('/', (req, res) => {
-  res.send('Hello from Vercel + Express!');
+  res.send('Hello');
 });
+
 
 app.use('/api', userRoutes);
 app.use('/apply', applyRoutes);
-
-// ❌ DO NOT include `app.listen(...)`
-// ✅ Instead, export the app for Vercel to use as a serverless function
-module.exports = app;
+// Start server
+app.listen(3000, () => console.log("Server running on port 3000"));
