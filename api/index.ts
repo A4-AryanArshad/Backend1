@@ -8,9 +8,10 @@ const cookieParser = require('cookie-parser');
 const userRoutes = require('../routes/userRoutes');
 const applyRoutes = require('../routes/applyRoutes');
 const app = express();
+require('dotenv').config();
 
 // DB Connection
-mongoose.connect('mongodb+srv://nihaarshad5:r6eH4cYY4ZdOprgl@cluster0.o8bu9nt.mongodb.net/', {
+mongoose.connect(process.env.MONGO_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 }).then(() => console.log("MongoDB connected"))
